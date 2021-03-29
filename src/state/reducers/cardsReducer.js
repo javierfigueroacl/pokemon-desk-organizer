@@ -7,25 +7,35 @@ const initialState = {
   loading: false
 };
 
+const removeCard = (column, card) => column.filter(item => item !== card);
+const addCard = (column, card, index) => [
+  ...column.slice(0, index),
+  card,
+  ...column.slice(index, column.length)
+];
+
 // Move a card from one column to another without mutating the state
 const moveCard = (state, data) => {
   const { source, destination } = data;
-  console.log({ data });
-  const sourceColumn = source.droppableId;
-  const card = state[sourceColumn][source.index];
-  const removedItem = state[source.droppableId].filter(item => item !== card);
-  const addedItem = [
-    ...state[destination.droppableId].slice(0, destination.index),
-    state[source.droppableId][source.index],
-    ...state[destination.droppableId].slice(
-      destination.index,
-      state[destination.droppableId].length
-    )
-  ];
+  const card = state[source.droppableId][source.index];
+
+  if (source.droppableId !== destination.droppableId)
+    return {
+      ...state,
+      [source.droppableId]: removeCard(state[source.droppableId], card),
+      [destination.droppableId]: addCard(
+        state[destination.droppableId],
+        card,
+        destination.index
+      )
+    };
   return {
     ...state,
-    [source.droppableId]: removedItem,
-    [destination.droppableId]: addedItem
+    [source.droppableId]: addCard(
+      removeCard(state[source.droppableId], card),
+      card,
+      destination.index
+    )
   };
 };
 
