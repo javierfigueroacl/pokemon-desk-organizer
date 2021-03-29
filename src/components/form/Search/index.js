@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { blue } from "../../../helpers/colors";
+import useTitleSetter from "./useTitleSetter";
 
 let timeout = null;
 
@@ -22,28 +23,38 @@ const Wrapper = styled.div`
 /* The prop is called "input" to differentiate it from the "value"
  property of the event object. */
 
-const Search = ({ placeholder, apiCall, input, changeValue }) => (
-  <Wrapper>
-    <Input
-      id="input-search"
-      value={input}
-      /* In OnChange, We start a timeout, this timeout is restarted
+const Search = ({ placeholder, apiCall, input, changeValue }) => {
+  /*useEffect(() => {
+    // Update the document title using the browser API(
+    if (input.length > 0) document.title = `You clicked ${input} times`;
+    return () => console.log("blah"); // componentDidUnmount
+  }, []); // componentDidMount */
+
+  useTitleSetter(input); // componentDidUpdate
+
+  return (
+    <Wrapper>
+      <Input
+        id="input-search"
+        value={input}
+        /* In OnChange, We start a timeout, this timeout is restarted
         when we call the event again, in this way we ensure that the
         api call only occurs when the timeout has ended. */
-      onChange={event => {
-        event.persist();
-        changeValue(event.target.value);
-        clearTimeout(timeout);
-        timeout = setTimeout(() => {
-          const { value } = event.target;
-          if (value.length > 0) apiCall(value);
-        }, 500);
-      }}
-      type="text"
-      placeholder={placeholder}
-    />
-  </Wrapper>
-);
+        onChange={event => {
+          event.persist();
+          changeValue(event.target.value);
+          clearTimeout(timeout);
+          timeout = setTimeout(() => { // TODO: useTimeout, useUndo (deshacer, separado), useFetch (API)
+            const { value } = event.target;
+            if (value.length > 0) apiCall(value);
+          }, 500);
+        }}
+        type="text"
+        placeholder={placeholder}
+      />
+    </Wrapper>
+  );
+};
 
 Search.defaultProps = {
   placeholder: "Search..."

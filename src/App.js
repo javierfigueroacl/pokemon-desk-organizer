@@ -34,8 +34,6 @@ function App({ getCards, Cardstate, saveCard, clearCards }) {
   const { cards, savedCards } = Cardstate;
   const [searchInput, setSearchInput] = useState("");
 
-  //clearCards()
-
   return (
     <Container>
       <Header />

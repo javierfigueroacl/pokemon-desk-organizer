@@ -40,15 +40,17 @@ const onDragEnd = (result, saveCard) => {
 // drag and drop actions can only occur within it.
 const CardBox = ({ cards, savedCards, saveCard, clearCards }) => {
   console.log({ savedCards });
-  return [
-    <DragDropContext onDragEnd={result => onDragEnd(result, saveCard)}>
-      <Column cards={cards} id="cards" />
-      <Column cards={savedCards} id="savedCards" />
-    </DragDropContext>,
-    savedCards.length > 0 && (
-      <ClearButton onClick={clearCards}>Clear Saved Cards List</ClearButton>
-    )
-  ];
+  return (
+    <>
+      <DragDropContext onDragEnd={result => onDragEnd(result, saveCard)}>
+        <Column cards={cards} id="cards" />
+        <Column cards={savedCards} id="savedCards" />
+      </DragDropContext>
+      {savedCards.length > 0 && (
+        <ClearButton onClick={clearCards}>Clear Saved Cards List</ClearButton>
+      )}
+    </>
+  );
 };
 
 CardBox.defaultProps = {
