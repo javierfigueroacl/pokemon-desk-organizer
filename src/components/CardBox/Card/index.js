@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as CardsCreators from "../../../state/actions/cardsActions";
 
 import { softGray } from "../../../helpers/colors";
 
@@ -20,29 +23,7 @@ const Overlay = styled.div`
   border-radius: 0.5rem;
   width: 8rem;
   height: 11rem;
-`;
-
-const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-  text-align: left;
-  padding: 0.3rem;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  font-weight: bold;
-`;
-
-const ScreenName = styled.span`
-  color: gray;
-  font-size: 0.8rem;
-  margin: auto;
+  cursor: pointer;
 `;
 
 /* Draggable is a component of the react-beautiful-dnd library, all drag
@@ -51,37 +32,24 @@ const ScreenName = styled.span`
   we use spreading props in the Container component, since these props
   are used internally by the library. */
 
-const Card = ({ data, id, index }) => {
-  const { imageUrl, name, number, series } = data;
-
-  return (
-    <Draggable draggableId={id} key={id} index={index}>
-      {provided => (
-        <Container
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-          id="card"
-          bgImage={imageUrl}
-        >
-          <Overlay>
-            <Info>
-              <Header>
-                <span>{name}</span>
-                <ScreenName>{number}</ScreenName>
-              </Header>
-              <ScreenName>{series}</ScreenName>
-            </Info>
-          </Overlay>
-        </Container>
-      )}
-    </Draggable>
-  );
-};
-
+const Card = ({ data, id, index, sendSelectedCardData }) => (
+  <Draggable draggableId={id} key={id} index={index}>
+    {provided => (
+      <Container
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        ref={provided.innerRef}
+        id="card"
+        bgImage={data.imageUrl}
+        onMouseEnter={() => sendSelectedCardData(data)}
+      >
+        <Overlay />
+      </Container>
+    )}
+  </Draggable>
+);
 Card.defaultProps = {
   data: {
-    text: "No text",
     imageUrl:
       "https://ps.is.tuebingen.mpg.de/assets/noEmployeeImage_md-eaa7c21cc21b1943d77e51ab00a5ebe9.png",
     name: "No name",
@@ -91,16 +59,19 @@ Card.defaultProps = {
 
 Card.propTypes = {
   data: PropTypes.shape({
-    text: PropTypes.string,
-    createdAt: PropTypes.number,
-    user: PropTypes.shape({
-      biggerProfileImageURL: PropTypes.string,
-      name: PropTypes.string,
-      screenName: PropTypes.string
-    })
+    imageUrl: PropTypes.string
   }),
-  id: PropTypes.number.isRequired,
+  sendSelectedCardData: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired
 };
 
-export default Card;
+function mapDispatchToProps(dispatch) {
+  const combiner = { ...CardsCreators, dispatch };
+  return bindActionCreators(combiner, dispatch);
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Card);

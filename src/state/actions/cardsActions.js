@@ -4,7 +4,8 @@ export const actions = {
   onGetCardsRequest: "ON_GET_CARDS_REQUEST",
   onGetCards: "ON_GET_CARDS",
   saveCard: "SAVE_CARD",
-  clearCards: "CLEAR_Cards"
+  clearCards: "CLEAR_CARDS",
+  sendSelectedCardData: "SEND_SELECTED_CARD_DATA"
 };
 
 export const onGetCards = data => ({
@@ -23,6 +24,11 @@ export const saveCard = data => ({
 
 export const clearCards = () => ({
   type: actions.clearCards
+});
+
+export const sendSelectedCardData = data => ({
+  type: actions.sendSelectedCardData,
+  data
 });
 
 // First, dispatch onGetCardsRequest,

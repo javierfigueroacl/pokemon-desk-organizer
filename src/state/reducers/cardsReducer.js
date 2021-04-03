@@ -4,6 +4,7 @@ import { actions as CardsActions } from "../actions/cardsActions";
 const initialState = {
   cards: [],
   savedCards: [],
+  selectedCard: null,
   loading: false
 };
 
@@ -40,7 +41,13 @@ const moveCard = (state, data) => {
 };
 
 const cardsReducer = (state = initialState, action) => {
-  const { clearCards, saveCard, onGetCardsRequest, onGetCards } = CardsActions;
+  const {
+    clearCards,
+    saveCard,
+    onGetCardsRequest,
+    onGetCards,
+    sendSelectedCardData
+  } = CardsActions;
   const { data } = action;
 
   switch (action.type) {
@@ -61,6 +68,8 @@ const cardsReducer = (state = initialState, action) => {
       // Save the change to local storage
       saveSession(moveCard(state, data));
       return moveCard(state, data);
+    case sendSelectedCardData:
+      return { ...state, selectedCard: data };
     default:
       return state;
   }

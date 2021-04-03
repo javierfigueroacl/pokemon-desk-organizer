@@ -10,7 +10,7 @@ import Card from "../Card";
 const loadingImg = "https://media.giphy.com/media/sSgvbe1m3n93G/giphy.gif";
 
 const Container = styled.div`
-  width: calc(95vw);
+  width: calc(70vw);
   grid-area: ${props => props.area};
   margin: 2rem;
   border: 1px solid ${softGray};

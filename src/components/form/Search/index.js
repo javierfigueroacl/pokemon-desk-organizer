@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -23,7 +23,8 @@ const Wrapper = styled.div`
 /* The prop is called "input" to differentiate it from the "value"
  property of the event object. */
 
-const Search = ({ placeholder, apiCall, input, changeValue }) => {
+const Search = ({ placeholder, apiCall }) => {
+  const [input, setInput] = useState("");
   /*useEffect(() => {
     // Update the document title using the browser API(
     if (input.length > 0) document.title = `You clicked ${input} times`;
@@ -42,7 +43,7 @@ const Search = ({ placeholder, apiCall, input, changeValue }) => {
         api call only occurs when the timeout has ended. */
         onChange={event => {
           event.persist();
-          changeValue(event.target.value);
+          setInput(event.target.value);
           clearTimeout(timeout);
           timeout = setTimeout(() => { // TODO: useTimeout, useUndo (deshacer, separado), useFetch (API)
             const { value } = event.target;
