@@ -52,6 +52,7 @@ const Empty = styled.div`
   justify-content: center;
   align-items: center;
   height: 11rem;
+  margin: auto;
 `;
 
 const columnName = {
@@ -76,7 +77,9 @@ const Column = ({ cards, id, loading }) => (
           areCards={cards.length > 0}
         >
           {loading && id === "cards" ? (
-            <Loading src={loadingImg} />
+            <Empty>
+              <Loading src={loadingImg} />
+            </Empty>
           ) : (
             [
               cards &&
