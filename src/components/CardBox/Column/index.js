@@ -9,13 +9,15 @@ import Card from "../Card";
 
 const loadingImg = "https://media.giphy.com/media/sSgvbe1m3n93G/giphy.gif";
 
+const CARD_HEIGHT = "17rem";
+
 const Container = styled.div`
   width: calc(70vw);
   grid-area: ${props => props.area};
   margin: 2rem;
   border: 1px solid ${softGray};
   border-radius: 0.5rem;
-  height: 17rem;
+  height: ${CARD_HEIGHT};
 `;
 
 const Loading = styled.img`
@@ -45,9 +47,16 @@ const Title = styled.div`
   font-weight: bold;
 `;
 
+const Empty = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 11rem;
+`;
+
 const columnName = {
   cards: "Cards List",
-  savedCards: "Saved Cards"
+  savedCards: "My Desk"
 };
 
 /* Droppable is a component of the react-beautiful-dnd library, all drop
@@ -82,7 +91,7 @@ const Column = ({ cards, id, loading }) => (
                       />
                     )
                 ),
-              cards && cards.length === 0 && "List is empty"
+              cards && cards.length === 0 && <Empty>List is empty</Empty>
             ]
           )}
           {provided.placeholder}

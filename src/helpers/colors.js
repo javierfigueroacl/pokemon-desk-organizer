@@ -3,4 +3,7 @@
 
 export const blue = "#8089A0";
 export const red = "#E7025C";
+export const lightestGray = "#f7f7f7";
+export const lightGray = "#ededed";
 export const softGray = "#dbdbdb";
+export const gray = "#332E4C";
