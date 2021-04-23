@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function useTitleSetter(input) {
-
-  const [title, setTitle] = useState("");
+  const title = "React Demo - Javier Figueroa";
   useEffect(() => {
-    // Update the document title using the browser API(
-    if (input.length > 0) document.title = `You clicked ${input} times`;
+    // Update the document title using the browser API
+    if (input) document.title = input;
+    else document.title = title;
   }, [input]);
-
-  return { title: document.title, setTitle };
 }

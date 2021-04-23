@@ -66,6 +66,17 @@ const columnName = {
   use spreading props in this case to the CardList component, since these
   props are used internally by the library. */
 
+const Cards = ({ cards }) => (
+  <>
+    {cards &&
+      cards.map(
+        (item, index) =>
+          item && <Card data={item} id={item.id} index={index} key={item.id} />
+      )}
+    {cards && cards.length === 0 && <Empty>List is empty</Empty>}
+  </>
+);
+
 const Column = ({ cards, id, loading }) => (
   <Droppable droppableId={id} direction="horizontal">
     {provided => (
@@ -81,21 +92,7 @@ const Column = ({ cards, id, loading }) => (
               <Loading src={loadingImg} />
             </Empty>
           ) : (
-            [
-              cards &&
-                cards.map(
-                  (item, index) =>
-                    item && (
-                      <Card
-                        data={item}
-                        id={item.id}
-                        index={index}
-                        key={item.id}
-                      />
-                    )
-                ),
-              cards && cards.length === 0 && <Empty>List is empty</Empty>
-            ]
+            <Cards cards={cards} />
           )}
           {provided.placeholder}
         </CardList>

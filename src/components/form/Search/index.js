@@ -25,13 +25,8 @@ const Wrapper = styled.div`
 
 const Search = ({ placeholder, apiCall }) => {
   const [input, setInput] = useState("");
-  /*useEffect(() => {
-    // Update the document title using the browser API(
-    if (input.length > 0) document.title = `You clicked ${input} times`;
-    return () => console.log("blah"); // componentDidUnmount
-  }, []); // componentDidMount */
 
-  useTitleSetter(input); // componentDidUpdate
+  useTitleSetter(input.length > 0 ? `Searching "${input}"...` : null); // componentDidUpdate
 
   return (
     <Wrapper>
@@ -45,7 +40,7 @@ const Search = ({ placeholder, apiCall }) => {
           event.persist();
           setInput(event.target.value);
           clearTimeout(timeout);
-          timeout = setTimeout(() => { // TODO: useTimeout, useUndo (deshacer, separado), useFetch (API)
+          timeout = setTimeout(() => {
             const { value } = event.target;
             if (value.length > 0) apiCall(value);
           }, 500);

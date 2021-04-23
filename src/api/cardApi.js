@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// URL (pending to solve CORS problem)
 const URL = "https://api.pokemontcg.io/v1/cards";
 
 // HTTP client: Axios
