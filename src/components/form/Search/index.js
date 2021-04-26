@@ -20,31 +20,31 @@ const Wrapper = styled.div`
   margin: auto;
 `;
 
+/* In OnChange, We start a timeout, this timeout is restarted
+  when we call the event again, in this way we ensure that the
+  api call only occurs when the timeout has ended. */
+const onChange = (event, setInput, apiCall) => {
+  event.persist();
+  setInput(event.target.value);
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    const { value } = event.target;
+    if (value.length > 0) apiCall(value);
+  }, 500);
+};
+
 /* The prop is called "input" to differentiate it from the "value"
  property of the event object. */
 
 const Search = ({ placeholder, apiCall }) => {
   const [input, setInput] = useState("");
-
-  useTitleSetter(input.length > 0 ? `Searching "${input}"...` : null); // componentDidUpdate
-
+  useTitleSetter(input.length > 0 ? `Searching "${input}"...` : null);
   return (
     <Wrapper>
       <Input
         id="input-search"
         value={input}
-        /* In OnChange, We start a timeout, this timeout is restarted
-        when we call the event again, in this way we ensure that the
-        api call only occurs when the timeout has ended. */
-        onChange={event => {
-          event.persist();
-          setInput(event.target.value);
-          clearTimeout(timeout);
-          timeout = setTimeout(() => {
-            const { value } = event.target;
-            if (value.length > 0) apiCall(value);
-          }, 500);
-        }}
+        onChange={event => onChange(event, setInput, apiCall)}
         type="text"
         placeholder={placeholder}
       />
@@ -58,9 +58,7 @@ Search.defaultProps = {
 
 Search.propTypes = {
   placeholder: PropTypes.string,
-  apiCall: PropTypes.func.isRequired,
-  input: PropTypes.string.isRequired,
-  changeValue: PropTypes.func.isRequired
+  apiCall: PropTypes.func.isRequired
 };
 
 export default Search;

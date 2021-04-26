@@ -49,16 +49,17 @@ const cardsReducer = (state = initialState, action) => {
     sendSelectedCardData
   } = CardsActions;
   const { data } = action;
+  let cards = null;
 
   switch (action.type) {
     case onGetCardsRequest:
       return { ...state, loading: true };
     case onGetCards:
-      let { cards } = data;
       if (state.savedCards)
         cards = data.cards.filter(
           card => !state.savedCards.some(item => item.id === card.id)
         );
+      else cards = data.cards;
       return { ...state, cards, loading: false };
     case clearCards:
       // Clear local storage
