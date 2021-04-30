@@ -5,6 +5,7 @@ import { blue } from "../../helpers/colors";
 const Content = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   grid-area: header;
   background-color: ${blue};
   padding: 0 3rem;
@@ -26,8 +27,10 @@ const CreatedBy = styled.span`
   font-size: 1rem;
 `;
 
-const Company = styled.h2`
+const GitHub = styled.a`
   color: white;
+  font-size: 1.6rem;
+  text-decoration: none;
 `;
 
 const Header = () => (
@@ -36,7 +39,9 @@ const Header = () => (
       <Title>React Demo</Title>
       <CreatedBy>Javier Figueroa</CreatedBy>
     </LeftBox>
-    <Company>XXXX</Company>
+    <GitHub href="https://github.com/javierfigueroacl" target="blank">
+      GitHub - <b>javierfigueroacl</b>
+    </GitHub>
   </Content>
 );
 
