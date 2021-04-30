@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+
 import { blue, lightGray } from "../../../helpers/colors";
 
 const InfoContainer = styled.div`
@@ -29,7 +31,7 @@ const Info = ({ data }) => (
     {data.map(
       item =>
         item.text && (
-          <FieldContainer>
+          <FieldContainer key={item.field}>
             <Field>{item.field}:</Field>
             <span>{item.text}</span>
           </FieldContainer>
@@ -37,5 +39,14 @@ const Info = ({ data }) => (
     )}
   </InfoContainer>
 );
+
+Info.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      field: PropTypes.string,
+      text: PropTypes.text
+    })
+  ).isRequired
+};
 
 export default Info;

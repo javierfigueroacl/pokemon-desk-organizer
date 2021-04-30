@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import Info from "./Info";
 import { blue, lightGray, lightestGray } from "../../../helpers/colors";
@@ -71,5 +72,20 @@ const CardContainer = ({ selectedCard }) => (
     </>
   </Wrapper>
 );
+
+CardContainer.propTypes = {
+  selectedCard: PropTypes.shape({
+    name: PropTypes.string,
+    hp: PropTypes.string,
+    imageUrl: PropTypes.string,
+    number: PropTypes.string,
+    nationalPokedexNumber: PropTypes.number,
+    rarity: PropTypes.string,
+    series: PropTypes.string,
+    set: PropTypes.string,
+    supertype: PropTypes.string,
+    artist: PropTypes.string
+  }).isRequired
+};
 
 export default CardContainer;

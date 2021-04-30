@@ -60,12 +60,6 @@ const columnName = {
   savedCards: "My Desk"
 };
 
-/* Droppable is a component of the react-beautiful-dnd library, all drop
-  actions can only occur within it. The Droppable component also expects
-  its child to be a function that returns a React component. Note that we
-  use spreading props in this case to the CardList component, since these
-  props are used internally by the library. */
-
 const Cards = ({ cards }) => (
   <>
     {cards &&
@@ -76,6 +70,16 @@ const Cards = ({ cards }) => (
     {cards && cards.length === 0 && <Empty>List is empty</Empty>}
   </>
 );
+
+Cards.propTypes = {
+  cards: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+/* Droppable is a component of the react-beautiful-dnd library, all drop
+  actions can only occur within it. The Droppable component also expects
+  its child to be a function that returns a React component. Note that we
+  use spreading props in this case to the CardList component, since these
+  props are used internally by the library. */
 
 const Column = ({ cards, id, loading }) => (
   <Droppable droppableId={id} direction="horizontal">
