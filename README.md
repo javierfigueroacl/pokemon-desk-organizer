@@ -12,7 +12,7 @@ This tool is for helping you to organize a desk for the Pokémon Trading Card Ga
 
 ## Getting Started
 
-## Prerequisites
+### Prerequisites
 
 * NodeJS (including npm)
 
