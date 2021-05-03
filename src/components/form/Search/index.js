@@ -12,6 +12,8 @@ const Input = styled.input`
   font-size: 1.5rem;
   height: 2rem;
   border-bottom: 1px solid ${blue};
+  color: gray;
+  outline: none;
 `;
 
 const Wrapper = styled.div`

@@ -1,68 +1,62 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Pokémon Desk Card Organizer
 
-## Available Scripts
+This tool is for helping you to organize a desk for the Pokémon Trading Card Game. Search for cards and drag & drop them into your desk. The deck is saved even if you reload the page.
 
-In the project directory, you can run:
+![Demo App](./public/reordering.gif)
+
+## Table of contents
+* [Getting Started](#general-info)
+* [Technologies](#technologies)
+* [Usage](#usage)
+* [Future Work](#future-work)
+
+## Getting Started
+
+## Prerequisites
+
+* NodeJS (including npm)
+
+Close or download this repository. After that, using the terminal, run the following command in the project's folder to run the application.
 
 ### `npm start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Technologies
 
-### `npm test`
+* ReactJS
+* Redux
+* Styled Components
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Redux is used to store and handle the cards' data. An approach using custom Hooks is on the works. For styling, I decided to use style components because it allows to reuse the whole component including the styling, and being able to use Javascript into the CSS reduces considerably the number of "classes" required and makes the styling more readable and integrated to the component logic.
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Searching for a card
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Search as you type in the input field. A list of matching results will be displayed.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![Searching](./public/searching.gif)
 
-### `npm run eject`
+* Saving the card
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Drag a card from the Card List and drop it to your Desk to save it.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Adding](./public/adding.gif)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* Reordering the list
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You can reorder the cards in both Card List and Desk. All cards including their order persist if you refresh the page.
 
-## Learn More
+![Reordering](./public/reordering.gif)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Future Work
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+These are some of the features that are in the works for this demo project:
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* Use of mock data if API data fails: Currently I am using a public API to show this demo. However I do not know if that API will still be available in the future. I will add mock data in case the API is shut down in the future so this demo can still be used.
+* Limit the number of cards that can the added to a desk and show "cards added / total cards" in the desk's list.
+* Filter by type of card. These filters will be seen in the card info as well.
+* Update dependencies: The dependencies are a little bit outdated. Since this project is used as portfolio, I will update to use the latest React and ES features. This is an ongoing work.
+* Use custom hooks to handle the data in local storage.
