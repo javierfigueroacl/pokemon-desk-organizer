@@ -2,9 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as CardsCreators from "../../../state/actions/cardsActions";
 import { useCardsDispatch } from "../../../context";
 
 import { softGray } from "../../../helpers/colors";
@@ -72,9 +69,4 @@ Card.propTypes = {
   index: PropTypes.number.isRequired,
 };
 
-function mapDispatchToProps(dispatch) {
-  const combiner = { ...CardsCreators, dispatch };
-  return bindActionCreators(combiner, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(Card);
+export default Card;

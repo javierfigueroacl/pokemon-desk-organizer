@@ -1,12 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import apiGetCards from "../../api/cardApi";
-import * as CardsCreators from "../../state/actions/cardsActions";
 import { useCards, useCardsDispatch } from "../../context";
 
 import { red, blue } from "../../helpers/colors";
@@ -50,9 +46,6 @@ const CardBox = () => {
   };
 
   const clearCards = () => dispatch({ type: "CLEAR_CARDS" });
-
-  // TODO: REPLACE SAVECARDS to context
-  console.log({ cards, savedCards });
   return (
     <>
       <Search placeholder="Search Cards as you type..." apiCall={apiGetCards} />
@@ -72,21 +65,4 @@ const CardBox = () => {
   );
 };
 
-CardBox.defaultProps = {
-  Cardstate: { cards: [], savedCards: [] },
-};
-
-CardBox.propTypes = {
-  clearCards: PropTypes.func.isRequired,
-};
-
-function mapDispatchToProps(dispatch) {
-  const combiner = { ...CardsCreators, dispatch };
-  return bindActionCreators(combiner, dispatch);
-}
-
-const mapStateToProps = (state) => ({
-  Cardstate: state.cards,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CardBox);
+export default CardBox;
