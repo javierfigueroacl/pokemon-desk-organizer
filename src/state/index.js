@@ -13,7 +13,7 @@ const persistedSession = loadSession();
 
 // Add them to this object
 const reducers = {
-  cards: cardsReducer
+  cards: cardsReducer,
 };
 
 const composeEnhancers =

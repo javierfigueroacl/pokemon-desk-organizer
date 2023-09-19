@@ -5,7 +5,9 @@ import { bindActionCreators } from "redux";
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import apiGetCards from "../../api/cardApi";
 import * as CardsCreators from "../../state/actions/cardsActions";
+import { useCards, useCardsDispatch } from "../../context";
 
 import { red, blue } from "../../helpers/colors";
 import Column from "./Column";
@@ -31,28 +33,34 @@ const Instructions = styled.div`
   color: ${blue};
 `;
 
-/* This is the callback after drag. In this case we only perform actions
-  if the source column is different from the destination column, but the
-  library supports all cases. */
-const onDragEnd = (result, saveCard) => {
-  const { destination, source } = result;
-
-  if (!destination) return;
-  saveCard({ source, destination });
-};
-
 // DragDropContext is a component of the react-beautiful-dnd library, all
 // drag and drop actions can only occur within it.
-const CardBox = ({ getCards, Cardstate, saveCard, clearCards }) => {
-  const { cards, savedCards, selectedCard } = Cardstate;
+const CardBox = () => {
+  const { cards, savedCards, selectedCard } = useCards();
+  const dispatch = useCardsDispatch();
+
+  /* This is the callback after drag. In this case we only perform actions
+  if the source column is different from the destination column, but the
+  library supports all cases. */
+  const onDragEnd = (result) => {
+    const { destination, source } = result;
+
+    if (!destination) return;
+    dispatch({ type: "SAVE_CARD", data: { source, destination } });
+  };
+
+  const clearCards = () => dispatch({ type: "CLEAR_CARDS" });
+
+  // TODO: REPLACE SAVECARDS to context
+  console.log({ cards, savedCards });
   return (
     <>
-      <Search placeholder="Search Cards as you type..." apiCall={getCards} />
+      <Search placeholder="Search Cards as you type..." apiCall={apiGetCards} />
       <Instructions>
         Move cards to the right column to save them. You can delete them by
         returning them to the left column.
       </Instructions>
-      <DragDropContext onDragEnd={result => onDragEnd(result, saveCard)}>
+      <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
         <Column cards={cards} id="cards" />
         <Column cards={savedCards} id="savedCards" />
       </DragDropContext>
@@ -65,18 +73,11 @@ const CardBox = ({ getCards, Cardstate, saveCard, clearCards }) => {
 };
 
 CardBox.defaultProps = {
-  Cardstate: { cards: [], savedCards: [] }
+  Cardstate: { cards: [], savedCards: [] },
 };
 
 CardBox.propTypes = {
-  saveCard: PropTypes.func.isRequired,
   clearCards: PropTypes.func.isRequired,
-  getCards: PropTypes.func.isRequired,
-  Cardstate: PropTypes.shape({
-    savedCards: PropTypes.array,
-    cards: PropTypes.array,
-    selectedCard: PropTypes.object
-  })
 };
 
 function mapDispatchToProps(dispatch) {
@@ -84,11 +85,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(combiner, dispatch);
 }
 
-const mapStateToProps = state => ({
-  Cardstate: state.cards
+const mapStateToProps = (state) => ({
+  Cardstate: state.cards,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CardBox);
+export default connect(mapStateToProps, mapDispatchToProps)(CardBox);

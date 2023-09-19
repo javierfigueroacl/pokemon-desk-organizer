@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useReducer } from "react";
 import styled from "styled-components";
+import { loadSession } from "./helpers/localStorageHelper";
 
+import cardsReducer from "./state/reducers/cardsReducer";
+import { CardsContext, CardsDispatchContext } from "./context";
 import CardBox from "./components/CardBox";
 import "./App.css";
 import Header from "./components/Header";
@@ -19,11 +22,26 @@ const Container = styled.div`
 `;
 
 function App() {
+  // TODO: solve duplication between here, context.js and cardsReducer.js
+  const initialState = {
+    cards: [],
+    savedCards: [],
+    selectedCard: null,
+    loading: false,
+  };
+
+  const session = (loadSession() && loadSession().cards) || initialState;
+  const [cards, dispatch] = useReducer(cardsReducer, session);
+
   return (
-    <Container>
-      <Header />
-      <CardBox />
-    </Container>
+    <CardsContext.Provider value={cards}>
+      <CardsDispatchContext.Provider value={dispatch}>
+        <Container>
+          <Header />
+          <CardBox />
+        </Container>
+      </CardsDispatchContext.Provider>
+    </CardsContext.Provider>
   );
 }
 

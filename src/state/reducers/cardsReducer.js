@@ -5,14 +5,14 @@ const initialState = {
   cards: [],
   savedCards: [],
   selectedCard: null,
-  loading: false
+  loading: false,
 };
 
-const removeCard = (column, card) => column.filter(item => item !== card);
+const removeCard = (column, card) => column.filter((item) => item !== card);
 const addCard = (column, card, index) => [
   ...column.slice(0, index),
   card,
-  ...column.slice(index, column.length)
+  ...column.slice(index, column.length),
 ];
 
 // Move a card from one column to another without mutating the state
@@ -28,7 +28,7 @@ const moveCard = (state, data) => {
         state[destination.droppableId],
         card,
         destination.index
-      )
+      ),
     };
   return {
     ...state,
@@ -36,7 +36,7 @@ const moveCard = (state, data) => {
       removeCard(state[source.droppableId], card),
       card,
       destination.index
-    )
+    ),
   };
 };
 
@@ -46,7 +46,7 @@ const cardsReducer = (state = initialState, action) => {
     saveCard,
     onGetCardsRequest,
     onGetCards,
-    sendSelectedCardData
+    sendSelectedCardData,
   } = CardsActions;
   const { data } = action;
   let cards = null;
@@ -57,7 +57,7 @@ const cardsReducer = (state = initialState, action) => {
     case onGetCards:
       if (state.savedCards)
         cards = data.cards.filter(
-          card => !state.savedCards.some(item => item.id === card.id)
+          (card) => !state.savedCards.some((item) => item.id === card.id)
         );
       else cards = data.cards;
       return { ...state, cards, loading: false };

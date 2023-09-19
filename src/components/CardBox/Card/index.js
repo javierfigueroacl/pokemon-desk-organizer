@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as CardsCreators from "../../../state/actions/cardsActions";
+import { useCardsDispatch } from "../../../context";
 
 import { softGray } from "../../../helpers/colors";
 
@@ -14,7 +15,7 @@ const Container = styled.div`
   border-bottom: 1px solid ${softGray};
   border-radius: 0.5rem;
   background-size: cover;
-  background-image: url('${props => props.bgImage}');
+  background-image: url("${(props) => props.bgImage}");
 `;
 
 const Overlay = styled.div`
@@ -32,38 +33,43 @@ const Overlay = styled.div`
   we use spreading props in the Container component, since these props
   are used internally by the library. */
 
-const Card = ({ data, id, index, sendSelectedCardData }) => (
-  <Draggable draggableId={id} key={id} index={index}>
-    {provided => (
-      <Container
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        ref={provided.innerRef}
-        id="card"
-        bgImage={data.imageUrl}
-        onMouseEnter={() => sendSelectedCardData(data)}
-      >
-        <Overlay />
-      </Container>
-    )}
-  </Draggable>
-);
+const Card = ({ data, id, index }) => {
+  const dispatch = useCardsDispatch();
+
+  return (
+    <Draggable draggableId={id} key={id} index={index}>
+      {(provided) => (
+        <Container
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          id="card"
+          bgImage={data.imageUrl}
+          onMouseEnter={() =>
+            dispatch({ type: "SEND_SELECTED_CARD_DATA", data })
+          }
+        >
+          <Overlay />
+        </Container>
+      )}
+    </Draggable>
+  );
+};
 Card.defaultProps = {
   data: {
     imageUrl:
       "https://ps.is.tuebingen.mpg.de/assets/noEmployeeImage_md-eaa7c21cc21b1943d77e51ab00a5ebe9.png",
     name: "No name",
-    screenName: "NoScreenName"
-  }
+    screenName: "NoScreenName",
+  },
 };
 
 Card.propTypes = {
   data: PropTypes.shape({
-    imageUrl: PropTypes.string
+    imageUrl: PropTypes.string,
   }),
-  sendSelectedCardData: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -71,7 +77,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(combiner, dispatch);
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Card);
+export default connect(null, mapDispatchToProps)(Card);

@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { blue } from "../../../helpers/colors";
 import useTitleSetter from "./useTitleSetter";
+import { useCardsDispatch } from "../../../context";
 
 let timeout = null;
 
@@ -25,13 +26,18 @@ const Wrapper = styled.div`
 /* In OnChange, We start a timeout, this timeout is restarted
   when we call the event again, in this way we ensure that the
   api call only occurs when the timeout has ended. */
-const onChange = (event, setInput, apiCall) => {
+const onChange = (event, setInput, apiCall, dispatch) => {
   event.persist();
   setInput(event.target.value);
   clearTimeout(timeout);
   timeout = setTimeout(() => {
     const { value } = event.target;
-    if (value.length > 0) apiCall(value);
+    if (value.length > 0) {
+      dispatch({ type: "ON_GET_CARDS_REQUEST" });
+      apiCall(value).then((response) => {
+        dispatch({ type: "ON_GET_CARDS", data: response.data });
+      });
+    }
   }, 500);
 };
 
@@ -41,12 +47,14 @@ const onChange = (event, setInput, apiCall) => {
 const Search = ({ placeholder, apiCall }) => {
   const [input, setInput] = useState("");
   useTitleSetter(input.length > 0 ? `Searching "${input}"...` : null);
+  const dispatch = useCardsDispatch();
+
   return (
     <Wrapper>
       <Input
         id="input-search"
         value={input}
-        onChange={event => onChange(event, setInput, apiCall)}
+        onChange={(event) => onChange(event, setInput, apiCall, dispatch)}
         type="text"
         placeholder={placeholder}
       />
@@ -55,12 +63,12 @@ const Search = ({ placeholder, apiCall }) => {
 };
 
 Search.defaultProps = {
-  placeholder: "Search..."
+  placeholder: "Search...",
 };
 
 Search.propTypes = {
   placeholder: PropTypes.string,
-  apiCall: PropTypes.func.isRequired
+  apiCall: PropTypes.func.isRequired,
 };
 
 export default Search;

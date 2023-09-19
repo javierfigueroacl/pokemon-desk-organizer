@@ -5,39 +5,39 @@ export const actions = {
   onGetCards: "ON_GET_CARDS",
   saveCard: "SAVE_CARD",
   clearCards: "CLEAR_CARDS",
-  sendSelectedCardData: "SEND_SELECTED_CARD_DATA"
+  sendSelectedCardData: "SEND_SELECTED_CARD_DATA",
 };
 
-export const onGetCards = data => ({
+export const onGetCards = (data) => ({
   type: actions.onGetCards,
-  data
+  data,
 });
 
 export const onGetCardsRequest = () => ({
-  type: actions.onGetCardsRequest
+  type: actions.onGetCardsRequest,
 });
 
-export const saveCard = data => ({
+export const saveCard = (data) => ({
   type: actions.saveCard,
-  data
+  data,
 });
 
 export const clearCards = () => ({
-  type: actions.clearCards
+  type: actions.clearCards,
 });
 
-export const sendSelectedCardData = data => ({
+export const sendSelectedCardData = (data) => ({
   type: actions.sendSelectedCardData,
-  data
+  data,
 });
 
 // First, dispatch onGetCardsRequest,
 // the state is updated with the information
 // that the request was sent. Once the response is
 // received, it is dispatched onGetCards
-export const getCards = data => dispatch => {
+export const getCards = (data) => (dispatch) => {
   dispatch(onGetCardsRequest());
-  return apiGetCards(data).then(response => {
+  return apiGetCards(data).then((response) => {
     dispatch(onGetCards(response.data));
   });
 };
