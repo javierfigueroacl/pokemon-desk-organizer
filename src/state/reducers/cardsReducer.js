@@ -1,13 +1,6 @@
 import { saveSession, clearSession } from "../../helpers/localStorageHelper";
 import { actions as CardsActions } from "../actions/cardsActions";
 
-const initialState = {
-  cards: [],
-  savedCards: [],
-  selectedCard: null,
-  loading: false,
-};
-
 const removeCard = (column, card) => column.filter((item) => item !== card);
 const addCard = (column, card, index) => [
   ...column.slice(0, index),
@@ -40,7 +33,7 @@ const moveCard = (state, data) => {
   };
 };
 
-const cardsReducer = (state = initialState, action) => {
+const cardsReducer = (state, action) => {
   const {
     clearCards,
     saveCard,

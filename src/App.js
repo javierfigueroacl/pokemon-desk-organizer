@@ -22,7 +22,6 @@ const Container = styled.div`
 `;
 
 function App() {
-  // TODO: solve duplication between here, context.js and cardsReducer.js
   const initialState = {
     cards: [],
     savedCards: [],

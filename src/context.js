@@ -1,11 +1,6 @@
 import { createContext, useContext } from "react";
 
-export const CardsContext = createContext({
-  cards: [],
-  savedCards: [],
-  selectedCard: null,
-  loading: false,
-});
+export const CardsContext = createContext({});
 
 export const CardsDispatchContext = createContext(null);
 
