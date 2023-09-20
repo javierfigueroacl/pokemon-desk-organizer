@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { blue } from "../../../helpers/colors";
 import useTitleSetter from "./useTitleSetter";
 import { useCardsDispatch } from "../../../context";
+import { getCards } from "../../../state/actions/cardsActions";
 
 let timeout = null;
 
@@ -23,24 +24,6 @@ const Wrapper = styled.div`
   margin: auto;
 `;
 
-/* In OnChange, We start a timeout, this timeout is restarted
-  when we call the event again, in this way we ensure that the
-  api call only occurs when the timeout has ended. */
-const onChange = (event, setInput, apiCall, dispatch) => {
-  event.persist();
-  setInput(event.target.value);
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
-    const { value } = event.target;
-    if (value.length > 0) {
-      dispatch({ type: "ON_GET_CARDS_REQUEST" });
-      apiCall(value).then((response) => {
-        dispatch({ type: "ON_GET_CARDS", data: response.data });
-      });
-    }
-  }, 500);
-};
-
 /* The prop is called "input" to differentiate it from the "value"
  property of the event object. */
 
@@ -49,12 +32,27 @@ const Search = ({ placeholder, apiCall }) => {
   useTitleSetter(input.length > 0 ? `Searching "${input}"...` : null);
   const dispatch = useCardsDispatch();
 
+  /* In OnChange, We start a timeout, this timeout is restarted
+  when we call the event again, in this way we ensure that the
+  api call only occurs when the timeout has ended. */
+  const onChange = (event) => {
+    event.persist();
+    setInput(event.target.value);
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      const { value } = event.target;
+      if (value.length > 0) {
+        getCards(dispatch, apiCall, value);
+      }
+    }, 500);
+  };
+
   return (
     <Wrapper>
       <Input
         id="input-search"
         value={input}
-        onChange={(event) => onChange(event, setInput, apiCall, dispatch)}
+        onChange={onChange}
         type="text"
         placeholder={placeholder}
       />
