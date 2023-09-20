@@ -9,6 +9,7 @@ import { red, blue } from "../../helpers/colors";
 import Column from "./Column";
 import CardInfo from "./CardInfo";
 import Search from "../form/Search";
+import { saveCard, clearCards } from "../../state/actions/cardsActions";
 
 const ClearButton = styled.button`
   grid-area: clear-saved-cards;
@@ -42,10 +43,11 @@ const CardBox = () => {
     const { destination, source } = result;
 
     if (!destination) return;
-    dispatch({ type: "SAVE_CARD", data: { source, destination } });
+    saveCard(dispatch, { source, destination });
   };
 
-  const clearCards = () => dispatch({ type: "CLEAR_CARDS" });
+  const handleClick = () => clearCards(dispatch);
+
   return (
     <>
       <Search placeholder="Search Cards as you type..." apiCall={apiGetCards} />
@@ -58,7 +60,7 @@ const CardBox = () => {
         <Column cards={savedCards} id="savedCards" />
       </DragDropContext>
       {savedCards.length > 0 && (
-        <ClearButton onClick={clearCards}>Clear Saved Cards List</ClearButton>
+        <ClearButton onClick={handleClick}>Clear Saved Cards List</ClearButton>
       )}
       <CardInfo selectedCard={selectedCard} />
     </>

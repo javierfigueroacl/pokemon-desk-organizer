@@ -15,19 +15,22 @@ export const onGetCardsRequest = () => ({
   type: actions.onGetCardsRequest,
 });
 
-export const saveCard = (data) => ({
-  type: actions.saveCard,
-  data,
-});
+export const saveCard = (dispatch, data) =>
+  dispatch({
+    type: actions.saveCard,
+    data,
+  });
 
-export const clearCards = () => ({
-  type: actions.clearCards,
-});
+export const clearCards = (dispatch) =>
+  dispatch({
+    type: actions.clearCards,
+  });
 
-export const sendSelectedCardData = (data) => ({
-  type: actions.sendSelectedCardData,
-  data,
-});
+export const sendSelectedCardData = (dispatch, data) =>
+  dispatch({
+    type: actions.sendSelectedCardData,
+    data,
+  });
 
 // First, dispatch onGetCardsRequest,
 // the state is updated with the information

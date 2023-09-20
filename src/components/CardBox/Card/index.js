@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { useCardsDispatch } from "../../../context";
 
 import { softGray } from "../../../helpers/colors";
+import { sendSelectedCardData } from "../../../state/actions/cardsActions";
 
 const Container = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const Overlay = styled.div`
 
 const Card = ({ data, id, index }) => {
   const dispatch = useCardsDispatch();
+  const handleOnMouseEnter = () => sendSelectedCardData(dispatch, data);
 
   return (
     <Draggable draggableId={id} key={id} index={index}>
@@ -42,9 +44,7 @@ const Card = ({ data, id, index }) => {
           ref={provided.innerRef}
           id="card"
           bgImage={data.imageUrl}
-          onMouseEnter={() =>
-            dispatch({ type: "SEND_SELECTED_CARD_DATA", data })
-          }
+          onMouseEnter={handleOnMouseEnter}
         >
           <Overlay />
         </Container>
