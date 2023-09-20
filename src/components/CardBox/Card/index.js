@@ -33,7 +33,7 @@ const Overlay = styled.div`
 
 const Card = ({ data, id, index }) => {
   const dispatch = useCardsDispatch();
-  const handleOnMouseEnter = () => sendSelectedCardData(dispatch, data);
+  const handleOnMouseEnter = () => dispatch(sendSelectedCardData(data));
 
   return (
     <Draggable draggableId={id} key={id} index={index}>

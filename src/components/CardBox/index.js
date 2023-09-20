@@ -2,14 +2,14 @@ import React from "react";
 
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
+
 import apiGetCards from "../../api/cardApi";
 import { useCards, useCardsDispatch } from "../../cardContext";
-
+import { saveCard, clearCards } from "../../state/actions/cardsActions";
 import { red, blue } from "../../helpers/colors";
 import Column from "./Column";
 import CardInfo from "./CardInfo";
 import Search from "../form/Search";
-import { saveCard, clearCards } from "../../state/actions/cardsActions";
 
 const ClearButton = styled.button`
   grid-area: clear-saved-cards;
@@ -43,10 +43,10 @@ const CardBox = () => {
     const { destination, source } = result;
 
     if (!destination) return;
-    saveCard(dispatch, { source, destination });
+    dispatch(saveCard({ source, destination }));
   };
 
-  const handleClick = () => clearCards(dispatch);
+  const handleClick = () => dispatch(clearCards());
 
   return (
     <>
