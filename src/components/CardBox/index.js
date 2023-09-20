@@ -3,7 +3,7 @@ import React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
 import apiGetCards from "../../api/cardApi";
-import { useCards, useCardsDispatch } from "../../context";
+import { useCards, useCardsDispatch } from "../../cardContext";
 
 import { red, blue } from "../../helpers/colors";
 import Column from "./Column";

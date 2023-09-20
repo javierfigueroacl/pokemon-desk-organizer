@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { blue } from "../../../helpers/colors";
 import useTitleSetter from "./useTitleSetter";
-import { useCardsDispatch } from "../../../context";
+import { useCardsDispatch } from "../../../cardContext";
 import { getCards } from "../../../state/actions/cardsActions";
 
 let timeout = null;

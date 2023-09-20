@@ -1,9 +1,6 @@
-import React, { useReducer } from "react";
+import React from "react";
 import styled from "styled-components";
-import { loadSession } from "./helpers/localStorageHelper";
-
-import cardsReducer from "./state/reducers/cardsReducer";
-import { CardsContext, CardsDispatchContext } from "./context";
+import { CardsProvider } from "./cardContext";
 import CardBox from "./components/CardBox";
 import "./App.css";
 import Header from "./components/Header";
@@ -22,25 +19,13 @@ const Container = styled.div`
 `;
 
 function App() {
-  const initialState = {
-    cards: [],
-    savedCards: [],
-    selectedCard: null,
-    loading: false,
-  };
-
-  const session = (loadSession() && loadSession().cards) || initialState;
-  const [cards, dispatch] = useReducer(cardsReducer, session);
-
   return (
-    <CardsContext.Provider value={cards}>
-      <CardsDispatchContext.Provider value={dispatch}>
-        <Container>
-          <Header />
-          <CardBox />
-        </Container>
-      </CardsDispatchContext.Provider>
-    </CardsContext.Provider>
+    <CardsProvider>
+      <Container>
+        <Header />
+        <CardBox />
+      </Container>
+    </CardsProvider>
   );
 }
 

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { softGray, blue } from "../../../helpers/colors";
 import Card from "../Card";
-import { useCards } from "../../../context";
+import { useCards } from "../../../cardContext";
 
 const loadingImg = "https://media.giphy.com/media/sSgvbe1m3n93G/giphy.gif";
 

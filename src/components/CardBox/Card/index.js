@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 import PropTypes from "prop-types";
-import { useCardsDispatch } from "../../../context";
+import { useCardsDispatch } from "../../../cardContext";
 
 import { softGray } from "../../../helpers/colors";
 import { sendSelectedCardData } from "../../../state/actions/cardsActions";
