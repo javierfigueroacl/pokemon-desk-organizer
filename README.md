@@ -28,11 +28,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 - ReactJS
 - Styled Components
-- Redux (\*)
+- Redux (Replaced \*)
 
 For styling, I decided to use style components because it allows to reuse the whole component including the styling, and being able to use Javascript into the CSS reduces considerably the number of "classes" required and makes the styling more readable and integrated to the component logic.
 
-(\*) Redux was used to store and handle the cards' data. An approach using Context / useReducer has replaced it. This is only to show multiple ways of handling the card state logic, Redux is always a valid option when centralized State management is needed. To see the original Redux implementation, go to the redux-store branch. (It will not be maintained after this change)
+(\*) Redux was used to store and handle the cards' data. An approach using Context / useReducer has replaced it. This is only to show multiple ways of handling the card state logic, Redux is always a valid option when centralized state management is needed. To see the original Redux implementation, go to the [redux-store](https://github.com/javierfigueroacl/pokemon-desk-organizer/tree/redux-store) branch. (It will not be maintained after this change)
 
 ## Usage
 
