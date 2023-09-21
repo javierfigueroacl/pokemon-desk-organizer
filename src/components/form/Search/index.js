@@ -69,4 +69,4 @@ Search.propTypes = {
   apiCall: PropTypes.func.isRequired,
 };
 
-export default Search;
+export default React.memo(Search);

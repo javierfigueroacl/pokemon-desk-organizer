@@ -52,4 +52,4 @@ const CardInfo = ({ selectedCard }) => (
   </Container>
 );
 
-export default CardInfo;
+export default React.memo(CardInfo);

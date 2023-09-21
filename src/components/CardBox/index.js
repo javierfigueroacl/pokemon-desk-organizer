@@ -55,7 +55,7 @@ const CardBox = () => {
         Move cards to the right column to save them. You can delete them by
         returning them to the left column.
       </Instructions>
-      <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Column cards={cards} id="cards" />
         <Column cards={savedCards} id="savedCards" />
       </DragDropContext>
