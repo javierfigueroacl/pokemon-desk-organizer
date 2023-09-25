@@ -10,6 +10,7 @@ import { red, blue } from "../../helpers/colors";
 import Column from "./Column";
 import CardInfo from "./CardInfo";
 import Search from "../form/Search";
+import useFetchCardsRequest from "../form/Search/useFetchCardsRequest";
 
 const ClearButton = styled.button`
   grid-area: clear-saved-cards;
@@ -50,7 +51,11 @@ const CardBox = () => {
 
   return (
     <>
-      <Search placeholder="Search Cards as you type..." apiCall={apiGetCards} />
+      <Search
+        placeholder="Search Cards as you type..."
+        apiCall={apiGetCards}
+        refetch={useFetchCardsRequest}
+      />
       <Instructions>
         Move cards to the right column to save them. You can delete them by
         returning them to the left column.

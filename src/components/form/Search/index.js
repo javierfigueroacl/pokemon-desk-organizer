@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import useDebouncedRefetch from "./useDebouncedRequest";
+import useDebouncedRefetch from "../../../hooks/useDebouncedRefetch";
 
 import { blue } from "../../../helpers/colors";
 import useTitleSetter from "./useTitleSetter";
@@ -24,11 +24,11 @@ const Wrapper = styled.div`
 /* The prop is called "input" to differentiate it from the "value"
  property of the event object. */
 
-const Search = ({ placeholder, apiCall }) => {
+const Search = ({ placeholder, apiCall, refetch }) => {
   const [input, setInput] = useState(null);
-  useTitleSetter(input && input.length > 0 ? `Searching "${input}"...` : null);
 
-  useDebouncedRefetch(apiCall, input);
+  useTitleSetter(input && input.length > 0 ? `Searching "${input}"...` : null);
+  useDebouncedRefetch(refetch, apiCall, input);
 
   const onChange = (event) => {
     setInput(event.target.value);
@@ -54,6 +54,7 @@ Search.defaultProps = {
 Search.propTypes = {
   placeholder: PropTypes.string,
   apiCall: PropTypes.func.isRequired,
+  refetch: PropTypes.func.isRequired,
 };
 
 export default React.memo(Search);
