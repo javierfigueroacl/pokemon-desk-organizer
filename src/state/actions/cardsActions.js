@@ -28,14 +28,3 @@ export const sendSelectedCardData = (data) => ({
   type: actions.sendSelectedCardData,
   data,
 });
-
-// First, dispatch onGetCardsRequest,
-// the state is updated with the information
-// that the request was sent. Once the response is
-// received, it is dispatched onGetCards
-export const getCards = (dispatch, apiGetCards, data) => {
-  dispatch(onGetCardsRequest());
-  return apiGetCards(data).then((response) => {
-    dispatch(onGetCards(response.data));
-  });
-};

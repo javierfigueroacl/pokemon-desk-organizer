@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { QueryClientProvider, QueryClient } from "react-query";
+
 import { CardsProvider } from "./cardContext";
 import CardBox from "./components/CardBox";
 import "./App.css";
@@ -18,14 +20,18 @@ const Container = styled.div`
     "clear-saved-cards clear-saved-cards";
 `;
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <CardsProvider>
-      <Container>
-        <Header />
-        <CardBox />
-      </Container>
-    </CardsProvider>
+    <QueryClientProvider client={queryClient}>
+      <CardsProvider>
+        <Container>
+          <Header />
+          <CardBox />
+        </Container>
+      </CardsProvider>
+    </QueryClientProvider>
   );
 }
 

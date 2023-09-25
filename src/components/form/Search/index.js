@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import useDebouncedRefetch from "./useDebouncedRequest";
 
 import { blue } from "../../../helpers/colors";
 import useTitleSetter from "./useTitleSetter";
-import { useCardsDispatch } from "../../../cardContext";
-import { getCards } from "../../../state/actions/cardsActions";
-
-let timeout = null;
 
 const Input = styled.input`
   width: 100%;
@@ -28,23 +25,13 @@ const Wrapper = styled.div`
  property of the event object. */
 
 const Search = ({ placeholder, apiCall }) => {
-  const [input, setInput] = useState("");
-  useTitleSetter(input.length > 0 ? `Searching "${input}"...` : null);
-  const dispatch = useCardsDispatch();
+  const [input, setInput] = useState(null);
+  useTitleSetter(input && input.length > 0 ? `Searching "${input}"...` : null);
 
-  /* In OnChange, We start a timeout, this timeout is restarted
-  when we call the event again, in this way we ensure that the
-  api call only occurs when the timeout has ended. */
+  useDebouncedRefetch(apiCall, input);
+
   const onChange = (event) => {
-    event.persist();
     setInput(event.target.value);
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      const { value } = event.target;
-      if (value.length > 0) {
-        getCards(dispatch, apiCall, value);
-      }
-    }, 500);
   };
 
   return (
