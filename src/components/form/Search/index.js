@@ -41,10 +41,13 @@ const Search = ({ placeholder, input, onChange }) => {
 
 Search.defaultProps = {
   placeholder: "Search...",
+  input: "",
 };
 
 Search.propTypes = {
   placeholder: PropTypes.string,
+  input: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default React.memo(Search);
