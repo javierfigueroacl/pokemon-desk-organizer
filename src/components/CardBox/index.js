@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { useDebounce } from "use-debounce";
 
 import apiGetCards from "../../api/cardApi";
 import { useCards, useCardsDispatch } from "../../cardContext";
@@ -35,6 +36,7 @@ const Instructions = styled.div`
 // drag and drop actions can only occur within it.
 const CardBox = () => {
   const { cards, savedCards, selectedCard } = useCards();
+  const [input, setInput] = useState(null);
   const dispatch = useCardsDispatch();
 
   /* This is the callback after drag. In this case we only perform actions
@@ -47,14 +49,27 @@ const CardBox = () => {
     dispatch(saveCard({ source, destination }));
   };
 
+  const onInputChange = (event) => {
+    setInput(event.target.value);
+  };
+
   const handleClick = () => dispatch(clearCards());
+
+  const [debouncedInput] = useDebounce(input, 500);
+  const { refetch } = useFetchCardsRequest(apiGetCards, debouncedInput);
+
+  useEffect(() => {
+    if (debouncedInput) {
+      refetch();
+    }
+  }, [debouncedInput, refetch]);
 
   return (
     <>
       <Search
         placeholder="Search Cards as you type..."
-        apiCall={apiGetCards}
-        refetch={useFetchCardsRequest}
+        onChange={onInputChange}
+        input={input}
       />
       <Instructions>
         Move cards to the right column to save them. You can delete them by
