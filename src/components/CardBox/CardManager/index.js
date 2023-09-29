@@ -2,6 +2,7 @@ import React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import styled from "styled-components";
 
+import { MAXIMUM_CARDS } from "../../../helpers/constants";
 import { red } from "../../../helpers/colors";
 import { useCards, useCardsDispatch } from "../../../cardContext";
 import { saveCard, clearCards } from "../../../state/actions/cardsActions";
@@ -24,6 +25,7 @@ const ClearButton = styled.button`
 const CardManager = () => {
   const { cards, savedCards, selectedCard } = useCards();
   const dispatch = useCardsDispatch();
+  const areMaximumCardsReached = savedCards.length === MAXIMUM_CARDS;
 
   /* This is the callback after drag. In this case we only perform actions
   if the source column is different from the destination column, but the
@@ -32,6 +34,8 @@ const CardManager = () => {
     const { destination, source } = result;
 
     if (!destination) return;
+    if (destination.droppableId === "savedCards" && areMaximumCardsReached)
+      return;
     dispatch(saveCard({ source, destination }));
   };
 

@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 import PropTypes from "prop-types";
 
-import { softGray, blue } from "../../../helpers/colors";
+import { MAXIMUM_CARDS } from "../../../helpers/constants";
+import { softGray, blue, red } from "../../../helpers/colors";
 import Card from "../Card";
 import { useCards } from "../../../cardContext";
 
@@ -55,10 +56,10 @@ const Empty = styled.div`
   margin: auto;
 `;
 
-const columnName = {
-  cards: "Cards List",
-  savedCards: "My Desk",
-};
+const MessageText = styled.span`
+  color: ${red};
+  margin-left: 1rem;
+`;
 
 const Cards = ({ cards }) => (
   <>
@@ -82,12 +83,24 @@ Cards.propTypes = {
   props are used internally by the library. */
 
 const Column = ({ cards, id }) => {
+  const areMaximumCardsReached =
+    id === "savedCards" && cards.length === MAXIMUM_CARDS;
   const { loading } = useCards();
+
+  const columnName = {
+    cards: "Cards List",
+    savedCards: `My Desk (${cards.length} / 60)`,
+  };
   return (
     <Droppable droppableId={id} direction="horizontal">
       {(provided) => (
         <Container area={id}>
-          <Title>{columnName[id]}</Title>
+          <Title>
+            {columnName[id]}{" "}
+            {areMaximumCardsReached && (
+              <MessageText>Desk Completed!</MessageText>
+            )}
+          </Title>
           <CardList
             ref={provided.innerRef}
             {...provided.droppableProps}
