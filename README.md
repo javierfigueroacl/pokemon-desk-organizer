@@ -56,6 +56,10 @@ You can reorder the cards in both Card List and Desk. All cards including their 
 
 ## Changelog
 
+### 2023.09.29
+
+- Limit the number of cards that can the added to a desk and show "cards added / total cards" in the desk's list.
+
 ### 2023.09.20
 
 - Use Context / useReducer instead of Redux
@@ -65,6 +69,5 @@ You can reorder the cards in both Card List and Desk. All cards including their 
 These are some of the features that are in the works for this demo project:
 
 - Use of mock data if API data fails: Currently I am using a public API to show this demo. However I do not know if that API will still be available in the future. I will add mock data in case the API is shut down in the future so this demo can still be used.
-- Limit the number of cards that can the added to a desk and show "cards added / total cards" in the desk's list.
 - Filter by type of card. These filters will be seen in the card info as well.
 - Update dependencies: The dependencies are a little bit outdated. Since this project is used as portfolio, I will update to use the latest React and ES features. This is an ongoing work.
